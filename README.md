@@ -1,4 +1,4 @@
-# frontend
+# Calculator Web App
 
 ## Project setup
 ```
