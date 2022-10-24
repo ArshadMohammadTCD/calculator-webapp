@@ -9,8 +9,7 @@ def calc(eq):
     i = 0
     j = 0
     while i < len(eq):
-        if eq[i] == "+" or eq[i] == "-" or eq[i] == "*" or eq[i] == "/" or eq[i] == "^" or eq[i] == "log" or eq[
-            i] == "exp":
+        if eq[i] == "+" or eq[i] == "-" or eq[i] == "*" or eq[i] == "/" or eq[i] == "^" or eq[i] == "log" or eq[i] == "exp":
             op.append(eq[i])
         else:
             num.append(eq[i])
@@ -20,17 +19,17 @@ def calc(eq):
     result = 0
     while count < len(op):
         if op[count] == "^":
-            ans = float(num[count]) ** float(num[count + 1])
-            num[count + 1] = ans
+            ans = float(num[count]) ** float(num[count+1])
+            num[count+1] = ans
             del num[count]
             del op[count]
         elif op[count] == "*":
-            ans = float(num[count]) * float(num[count + 1])
+            ans = float(num[count]) * float(num[count+1])
             num[count + 1] = ans
             del num[count]
             del op[count]
         elif op[count] == "/":
-            ans = float(num[count]) / float(num[count + 1])
+            ans = float(num[count]) / float(num[count+1])
             num[count + 1] = ans
             del num[count]
             del op[count]
@@ -39,9 +38,9 @@ def calc(eq):
     result += float(num[0])
     for x in range(0, len(op)):
         if op[x] == "+":
-            result += float(num[x + 1])
+            result += float(num[x+1])
         elif op[x] == "-":
-            result -= float(num[x + 1])
+            result -= float(num[x+1])
     return result
 
 
@@ -49,8 +48,7 @@ equation = "2.01^3*2/4"
 temp = ""
 eq = []
 for c in range(0, len(equation)):
-    if equation[c] == "+" or equation[c] == "-" or equation[c] == "*" or equation[c] == "/" or equation[c] == "^" or \
-            equation[c] == "log" or equation[c] == "exp":
+    if equation[c] == "+" or equation[c] == "-" or equation[c] == "*" or equation[c] == "/" or equation[c] == "^" or equation[c] == "log" or equation[c] == "exp":
         temp += " "
         temp += equation[c]
         temp += " "
@@ -113,10 +111,10 @@ def errorCheck(s):
                 try:
                     # Checking for empty log or exp call
                     if s[i] == 'l' or s[i] == 'e':
-                        if s[i+4] == ')':
+                        if s[i + 4] == ')':
                             return False
                     # Checking for double operators
-                    elif s[i+1] in operators[:5]:
+                    elif s[i + 1] in operators[:5]:
                         return False
                 except:
                     return False
