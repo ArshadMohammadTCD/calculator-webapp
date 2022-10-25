@@ -41,7 +41,7 @@ export default {
     buttonPress(n) {
 
       // Numeric value or operator
-      if (!(['AC', '=', 'exp', 'log'].includes(n))) {
+      if (!(['AC', '=', 'exp', 'log', 'Del'].includes(n))) {
         this.calculation_value += n + '';
       }
 
@@ -59,6 +59,11 @@ export default {
       if (n === '=') {
         // TODO: Call function here
         this.calculation_value = '';
+      }
+
+      // Del button
+      if (n === 'Del') {
+        this.calculation_value = this.calculation_value.slice(0, this.calculation_value.length - 1);
       }
     }
   }
