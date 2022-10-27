@@ -1,6 +1,7 @@
 from cmath import sqrt
 import math
 
+
 def calc(eq):
     op = []
     num = []
@@ -24,12 +25,12 @@ def calc(eq):
             del op[count]
         elif op[count] == "*":
             ans = float(num[count]) * float(num[count+1])
-            num[count+1] = ans
+            num[count + 1] = ans
             del num[count]
             del op[count]
         elif op[count] == "/":
             ans = float(num[count]) / float(num[count+1])
-            num[count+1] = ans
+            num[count + 1] = ans
             del num[count]
             del op[count]
         else:
@@ -42,6 +43,7 @@ def calc(eq):
             result -= float(num[x+1])
     return result
 
+
 equation = "2.01^3*2/4"
 temp = ""
 eq = []
@@ -50,10 +52,10 @@ for c in range(0, len(equation)):
         temp += " "
         temp += equation[c]
         temp += " "
-    elif  equation[c] == "(":
+    elif equation[c] == "(":
         temp += equation[c]
         temp += " "
-    elif equation [c] == ")":
+    elif equation[c] == ")":
         temp += " "
         temp += equation[c]
     else:
@@ -81,3 +83,45 @@ while i < len(eq):
         i += 1
 result = calc(eq)
 print("%.3f" % result)
+
+
+# errorCheck
+# Scans the user input String and returns boolean value based on validity of mathematical expression
+# Author: Abigail Amethyst
+# input - use input String
+# Returns true if input is valid mathematical expression, false if otherwise
+def errorCheck(s):
+    # Remove all spaces if there are any
+    s = s.replace(" ", "")
+    operators = ['+', '-', '*', '/', '^', 'l', 'e']
+    # Returns False if empty string is passed
+    if len(s) > 0:
+        # Bracket counters for open and closed brackets
+        oBrack = 0
+        cBrack = 0
+        # Scanning through input String
+        for i in range(0, len(s)):
+            if s[i] == '(':
+                oBrack += 1
+            if s[i] == ')':
+                cBrack += 1
+            if s[i] == '.':
+                return False
+            if s[i] in operators:
+                try:
+                    # Checking for empty log or exp call
+                    if s[i] == 'l' or s[i] == 'e':
+                        if s[i + 4] == ')':
+                            return False
+                    # Checking for double operators
+                    elif s[i + 1] in operators[:5]:
+                        return False
+                except:
+                    return False
+        # Return False if incorrect bracketing occurs
+        if oBrack != cBrack:
+            return False
+        else:
+            return True
+    else:
+        return False
