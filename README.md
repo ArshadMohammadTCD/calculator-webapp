@@ -67,9 +67,6 @@ To do this simply control click on the http://localhost:8080
 Then click 'Get user data'
 
 You final output should look something like this
-
-https://prnt.sc/osAhnM-2zjwv
-
-
+`[{"pets":["dog"],"username":"user1"},{"pets":[],"username":"user2"},{"pets":["duck","duck","goose"],"username":"user3"},{"pets":["hamster"],"username":"user4"}] `
 
 
