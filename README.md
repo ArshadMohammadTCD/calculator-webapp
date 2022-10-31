@@ -9,4 +9,4 @@ Firstly I install a http-server so we have an easy enough way to run our fronten
 
 `pip install flask flask-cors`
 
-
+(Dont mind this its WIP)
