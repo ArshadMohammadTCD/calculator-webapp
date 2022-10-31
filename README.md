@@ -69,4 +69,5 @@ Then click 'Get user data'
 You final output should look something like this
 `[{"pets":["dog"],"username":"user1"},{"pets":[],"username":"user2"},{"pets":["duck","duck","goose"],"username":"user3"},{"pets":["hamster"],"username":"user4"}] `
 
-
+You can also now send data which will then arrive at the backend (All though no implementation has been built surrounding this)
+`{"status": "success", "message": "received: >>the data<< "}`
