@@ -90,9 +90,15 @@ def calc(eq):
             result -= float(num[x+1])
     return result                                                      #return final result
 
-equation = "1+(2-1)+(7+2)-5"                                                    #only use for debug
+equation = " (2+2)-1"                                                    #only use for debug
 temp = ""                                                              #temp string to load space
 eq = []                                                                #list of main equation
+index = 0
+while index < len(equation):
+    if equation[index] == " ":
+        equation = equation.replace(" ", "")
+    index += 1
+
 index = 0
 while index < len(equation):                                           #if operator, add space to front and end, e.g.1+1 turn into 1 + 1
     if equation[index] == "+" or equation[index] == "*" or equation[index] == "/" or equation[index] == "^":
