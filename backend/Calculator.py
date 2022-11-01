@@ -163,7 +163,7 @@ print("%.3f" % result)                                                 #print it
 # errorCheck
 # Scans the user input String and returns boolean value based on validity of mathematical expression
 # Author: Abigail Amethyst
-# input - use input String
+# s - user input String
 # Returns true if input is valid mathematical expression, false if otherwise
 def errorCheck(s):
     # Remove all spaces if there are any
@@ -200,3 +200,17 @@ def errorCheck(s):
             return True
     else:
         return False
+
+
+# calc_api
+# Checks user input for valid mathematical expression and returns result based on validity (either result of calculation or error message)
+# For use in connecting frontend with backend
+# Author: Abigail Amethyst
+# s - user input string
+# Returns result in string form
+def calc_api(s):
+    isValid = errorCheck(s)
+    if isValid:
+        return str(calc(s))
+    else:
+        return "error: invalid input"
