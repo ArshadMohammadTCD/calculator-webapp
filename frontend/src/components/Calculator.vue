@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'CalculatorApp',
   props: {
@@ -54,19 +56,28 @@ export default {
 
       // exp and log buttons
       if (n === 'exp' || n === 'log') {
-        this.calculation_value += n + '('
-      }
-
-      // Equals button
-      if (n === '=') {
-        // TODO: Call function here
-        this.calculation_value = '';
+        this.calculation_value += n + '(';
       }
 
       // Del button
       if (n === 'Del') {
         this.calculation_value = this.calculation_value.slice(0, this.calculation_value.length - 1);
       }
+
+      // Equals button
+      if (n === '=') {
+        this.calculate();
+      }
+    },
+    calculate:function() {
+      const path = 'http://localhost:6969/calculator' // Not sure on the correct path
+      axios.get(path, { params: this.calculation_value})
+        .then((res) => {
+          this.calculation_value = res.data;
+        }) 
+        .catch((error) => {
+          console.error(error);
+        })
     }
   }
 }
