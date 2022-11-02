@@ -127,81 +127,108 @@ def calc(eq):
             result -= float(num[x+1])
     return result                                                      #return final result
 
-equation = " (2+2)-1"                                                    #only use for debug
-temp = ""                                                              #temp string to load space
-eq = []                                                                #list of main equation
-index = 0
-while index < len(equation):
-    if equation[index] == " ":
-        equation = equation.replace(" ", "")
-    index += 1
+def startCalc(equation):
+    temp = ""                                                              #temp string to load space
+    eq = []                                                                #list of main equation
+    index = 0
+    while index < len(equation):
+        if equation[index] == " ":
+            equation = equation.replace(" ", "")
+        index += 1
 
-index = 0
-while index < len(equation):                                           #if operator, add space to front and end, e.g.1+1 turn into 1 + 1
-    if equation[index] == "+" or equation[index] == "*" or equation[index] == "/" or equation[index] == "^":
-        if equation[index+1] == "-":                                   #if next is also an aperator(negative op), only add space at front
+    index = 0
+    while index < len(equation):                                           #if operator, add space to front and end, e.g.1+1 turn into 1 + 1
+        if equation[index] == "+" or equation[index] == "*" or equation[index] == "/" or equation[index] == "^":
+            if equation[index+1] == "-":                                   #if next is also an aperator(negative op), only add space at front
+                temp += " "
+                temp += equation[index]
+            else:                                                          #other operator
+                temp += " "
+                temp += equation[index]
+                temp += " "
+        elif equation[index] == "-":                                       #3 cases when "-"
+            if index == 0:                                                 #if start with neg element, only add space to the end
+                temp += equation[index]
+                temp += " "
+            elif equation[index+1] == "-":                                 #check anything like 1--1
+                temp += " "
+                temp += equation[index]
+            else:                                                          #normal "-" operator
+                temp += " "
+                temp += equation[index]
+                temp += " "
+        elif equation[index] == "l":                                       #in string you get l as the first character
+            temp += "log"                                                  #set the whole word log into the list
+            temp += " "
+            index += 2                                                     #skip character "o" and "g"
+        elif equation[index] == "e":                                       #e for exp
+            temp += "exp"
+            temp += " "
+            index += 2
+        elif  equation[index] == "(":                                      #open bracket operator
+            if equation[index+1] == "-":                                   #check anything like 1+(-1+1)
+                temp += equation[index]
+            else:                                                          #normal open bracket
+                temp += equation[index]
+                temp += " "
+        elif equation [index] == ")":                                      #close bracket operator
             temp += " "
             temp += equation[index]
-        else:                                                          #other operator
-            temp += " "
+        else:                                                              #when is a number
             temp += equation[index]
-            temp += " "
-    elif equation[index] == "-":                                       #3 case when "-"
-        if index == 0:                                                 #if start with neg element, only add space to the end
-            temp += equation[index]
-            temp += " "
-        elif equation[index+1] == "-":                                 #check anything like 1--1
-            temp += " "
-            temp += equation[index]
-        else:                                                          #normal "-" operator
-            temp += " "
-            temp += equation[index]
-            temp += " "
-    elif equation[index] == "l":                                       #in string you get l as the first character
-        temp += "log"                                                  #set the whole word log into the list
-        temp += " "
-        index += 2                                                     #skip character "o" and "g"
-    elif equation[index] == "e":                                       #e for exp
-        temp += "exp"
-        temp += " "
-        index += 2
-    elif  equation[index] == "(":                                      #open bracket operator
-        if equation[index+1] == "-":                                   #check anything like 1+(-1+1)
-            temp += equation[index]
-        else:                                                          #normal open bracket
-            temp += equation[index]
-            temp += " "
-    elif equation [index] == ")":                                      #close bracket operator
-        temp += " "
-        temp += equation[index]
-    else:                                                              #when is a number
-        temp += equation[index]
-    index += 1
-eq = list(temp.split(" "))
+        index += 1
+    eq = list(temp.split(" "))
 
-i = 0
-j = 0
-k = 0
-bracket = []                                                           #list to calculate bracket
-result = 0
-while i < len(eq):
-    if eq[i] == "(":                                                   #if there is a bracket
-        j = i + 1                                                      #pointer for the equation in the bracket
-        k = i                                                          #temp pointer for i
-        while eq[j] != ")":                                            #add equation to the list until find a close bracket
-            bracket.append(eq[j])
-            j += 1
-        result = calc(bracket)                                         #calculate the result
-        while k <= j:                                                  #check is the temp pointer reach the end of the bracket
-            del eq[i]                                                  #delete the whole bracket
-            k += 1
-        eq.insert(i, str(result))                                      #insert the answer into the place of bracket before
-        bracket.clear();                                               #clear the bracket for next time
-    else:
+    i = 0
+    j = 0
+    k = 0
+    t = 0
+    s = 0
+    l = 0
+    bracket = []                                                           #list to calculate bracket
+    result = 0
+    while i < len(eq):
+        if eq[i] == "(":                                                   #if there is a bracket
+            j = i + 1                                                      #pointer for the equation in the bracket
+            k = i                                                          #temp pointer for i
+            while eq[j] != ")":                                            #add equation to the list until find a close bracket
+                if eq[j] == "(":
+                    bracket.clear()
+                    j += 1
+                    if t == 0:
+                        t += 1
+                    s = j - 1
+                    l = s
+                bracket.append(eq[j])
+                j += 1
+            result = calc(bracket)                                         #calculate the result
+            if t == 0:
+                while k <= j:                                                  #check is the temp pointer reach the end of the bracket
+                    del eq[i]                                                  #delete the whole bracket
+                    k += 1
+                eq.insert(i, str(result))                                      #insert the answer into the place of bracket before
+                bracket.clear()                                                #clear the bracket for next time
+            else:
+                while s <= j:                                                  #check is the temp pointer reach the end of the bracket
+                    del eq[l]                                                  #delete the whole bracket
+                    s += 1
+                eq.insert(l, str(result))                                      #insert the answer into the place of bracket before
+                bracket.clear() 
+                t -= 1
+        else:
+            i += 1
+    result = calc(eq)                                                      #get the whole result
+    result = round(result, 3)
+    a = str(result)
+    i = 0
+    while i < len(a):
+        if a[i] == ".":
+            if len(a) == i+1:
+                a += "0"
+            elif len(a) == i+2:
+                a += "00"
         i += 1
-result = calc(eq)                                                      #get the whole result
-print("%.3f" % result)                                                 #print it with 3 digit
-
+    return a
 
 # errorCheck
 # Scans the user input String and returns boolean value based on validity of mathematical expression
@@ -254,6 +281,6 @@ def errorCheck(s):
 def calc_api(s):
     isValid = errorCheck(s)
     if isValid:
-        return str(calc(s))
+        return str(startCalc(s))
     else:
         return "error: invalid input"
