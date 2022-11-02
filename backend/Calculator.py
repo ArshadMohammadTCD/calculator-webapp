@@ -1,6 +1,43 @@
 from cmath import sqrt
 import math
 
+
+from flask import Flask, request
+import flask
+import json
+from flask_cors import CORS
+
+
+app = Flask(__name__)
+CORS(app)
+
+
+@app.route("/")
+def hello():
+    return "Hello, World!"
+
+@app.route('/users', methods=[ "POST"])
+def users():
+    print("users endpoint reached...")
+    # if request.method == "GET":
+    #     with open("users.json", "r") as f:
+    #         data = json.load(f)
+    #         data.append({
+    #             "username": "user4",
+    #             "pets": ["hamster"]
+    #         })
+    #         return flask.jsonify(data)
+    if request.method == "POST":
+        received_data = request.get_json()
+        print(f"received data: {received_data}")
+        message = received_data['data']
+        return_data = calc_api(message)
+        return flask.Response(response=json.dumps(return_data), status=201)
+
+if __name__ == "__main__":
+    app.run("localhost", 6969)  
+
+
 def calc(eq):
     op = []      #operator list
     num = []     #number list
@@ -163,7 +200,7 @@ print("%.3f" % result)                                                 #print it
 # errorCheck
 # Scans the user input String and returns boolean value based on validity of mathematical expression
 # Author: Abigail Amethyst
-# input - use input String
+# s - user input String
 # Returns true if input is valid mathematical expression, false if otherwise
 def errorCheck(s):
     # Remove all spaces if there are any
@@ -200,3 +237,17 @@ def errorCheck(s):
             return True
     else:
         return False
+
+
+# calc_api
+# Checks user input for valid mathematical expression and returns result based on validity (either result of calculation or error message)
+# For use in connecting frontend with backend
+# Author: Abigail Amethyst
+# s - user input string
+# Returns result in string form
+def calc_api(s):
+    isValid = errorCheck(s)
+    if isValid:
+        return str(calc(s))
+    else:
+        return "error: invalid input"
