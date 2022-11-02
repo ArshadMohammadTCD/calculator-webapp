@@ -24,8 +24,8 @@ class TestCalc(unittest.TestCase):
         """
         Test if valid expression returns correct answer
         """
-        self.assertEqual(calc_api("4 + 6"), "10", "Should be 10")
-        self.assertEqual(calc_api("25-9"), "16", "Should be 16")
+        self.assertEqual(calc_api("4 + 6"), "10.000", "Should be 10")
+        self.assertEqual(calc_api("25-9"), "16.000", "Should be 16")
 
     def test_api_incorrect(self):
         """
@@ -35,6 +35,71 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(calc_api("log()"), "error: invalid input", "Should be invalid input")
         self.assertEqual(calc_api(""), "error: invalid input", "Should be invalid input")
 
+    def test_basic_operations(self):
+        """
+        Test add, minus, multiply and division function
+        """
+        self.assertEqual(calc_api("1+1"), "2.000")
+        self.assertEqual(calc_api("2+5-3"), "4.000")
+        self.assertEqual(calc_api("4+8-1*2"), "10.000")
+        self.assertEqual(calc_api("5*4+6-2/3*5"), "22.667")
+        self.assertEqual(calc_api("0*0+1-4/5-145"), "-144.800")
+        self.assertEqual(calc_api("100-64921/210+357*2357"), "841239.852")
+
+    def test_power(self):
+        """
+        Test power
+        """
+        self.assertEqual(calc_api("0^0"), "1.000")
+        self.assertEqual(calc_api("55^4"), "9150625.000")
+        self.assertEqual(calc_api("1+8^6-5*7/10^8"), "262145.000")
+
+    def test_log(self):
+        """
+        Test log
+        """
+        self.assertEqual(calc_api("log(4)"), "0.602")
+        self.assertEqual(calc_api("log(11)"), "1.041")
+        self.assertEqual(calc_api("log(102)"), "2.009")
+
+    def test_exp(self):
+        """
+        Test exp
+        """
+        self.assertEqual(calc_api("exp(0)"), "1.000")
+        self.assertEqual(calc_api("exp(4)"), "54.598")
+        self.assertEqual(calc_api("exp(11)"), "59874.142")
+
+    def test_bracket(self):
+        """
+        Test bracket
+        """
+        self.assertEqual(calc_api("(5+1)"), "6.000")
+        self.assertEqual(calc_api("6*(1-1)"), "0.000")
+        self.assertEqual(calc_api("(1+1)/(2-1)"), "2.000")
+        self.assertEqual(calc_api("(1+5-2)*(2-1)"), "4.000")
+        self.assertEqual(calc_api("(1+(2-(5+7)))"), "-9.000")
+        self.assertEqual(calc_api("13+(1+(2-(5+7)))"), "4.000")
+
+    def test_neg(self):
+        """
+        Test neg
+        """
+        self.assertEqual(calc_api("-1-1"), "-2.000")
+        self.assertEqual(calc_api("1-(-1)"), "2.000")
+        self.assertEqual(calc_api("311+(-4)*(-22)-10"), "389.000")
+        self.assertEqual(calc_api("-log(4)"), "-0.602")
+        self.assertEqual(calc_api("-exp(5)"), "-148.413")
+        self.assertEqual(calc_api("exp(-2)"), "0.135")
+        self.assertEqual(calc_api("exp(-(-2))"), "7.389")
+
+    #def test_dec(self):
+    #    """
+    #    Test dec
+    #    """
+    #    self.assertEqual(calc_api("1.5+3.1"), "4.600")
+    #    self.assertEqual(calc_api("8.000+9.000"), "17.000")
+    #    self.assertEqual(calc_api("5.7655+1.47-5.6547*(8.11111-5.9)+4.269"), "-0.999")
 
 if __name__ == "__main__":
     unittest.main()
