@@ -8,6 +8,8 @@ class TestCalc(unittest.TestCase):
         """
         self.assertTrue(errorCheck("1 + 2 - 3 + log(4)"), "Should be True")
         self.assertTrue(errorCheck("1 - 5 * 7^8-exp(9)"), "Should be True")
+        self.assertTrue(errorCheck("54 + -3 * 6"), "Should be True")
+        self.assertTrue(errorCheck("6.453 - 24 ^ 42"), "Should be True")
 
     def test_incorrect_expr(self):
         """
@@ -16,7 +18,6 @@ class TestCalc(unittest.TestCase):
         self.assertFalse(errorCheck("1++24-log(2"), "Should be False")
         self.assertFalse(errorCheck("1 - 38 ^- log(3) + 32*2)"), "Should be False")
         self.assertFalse(errorCheck(""), "Should be False")
-        self.assertFalse(errorCheck("1.2 - 6"), "Should be False")
         self.assertFalse(errorCheck("(5 * 4 + 2"), "Should be False")
         self.assertFalse(errorCheck("249 + log()"), "Should be False")
 
@@ -26,6 +27,8 @@ class TestCalc(unittest.TestCase):
         """
         self.assertEqual(calc_api("4 + 6"), "10.000", "Should be 10")
         self.assertEqual(calc_api("25-9"), "16.000", "Should be 16")
+        self.assertEqual(calc_api("exp(4)"), "54.598", "Should be 54.598")
+        self.assertEqual(calc_api("3+5*exp(4.2)/(5+7)"), "30.786", "Should be 30.786")
 
     def test_api_incorrect(self):
         """
@@ -34,6 +37,7 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(calc_api("4-+ 6"), "error: invalid input", "Should be invalid input")
         self.assertEqual(calc_api("log()"), "error: invalid input", "Should be invalid input")
         self.assertEqual(calc_api(""), "error: invalid input", "Should be invalid input")
+        self.assertEqual(calc_api("3+**8"), "error: invalid input", "Should be invalid input")
 
     def test_basic_operations(self):
         """
