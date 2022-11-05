@@ -1,3 +1,3 @@
 FROM ubuntu:latest
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get -y python3
+RUN apt-get install -y python3
