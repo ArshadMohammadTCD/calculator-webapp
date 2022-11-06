@@ -209,7 +209,8 @@ def startCalc(equation):
 def errorCheck(s):
     # Remove all spaces if there are any
     s = s.replace(" ", "")
-    operators = ['+', '-', '*', '/', '^', 'l', 'e']
+    operators = ['+', '^', '*', '/', '-', 'l', 'e']
+    digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     # Returns False if empty string is passed
     if len(s) > 0:
         # Bracket counters for open and closed brackets
@@ -221,16 +222,17 @@ def errorCheck(s):
                 oBrack += 1
             if s[i] == ')':
                 cBrack += 1
-            if s[i] == '.':
-                return False
             if s[i] in operators:
                 try:
                     # Checking for empty log or exp call
                     if s[i] == 'l' or s[i] == 'e':
                         if s[i + 4] == ')':
                             return False
+                    # Checking for negative floats
+                    if s[i + 1] in digits and s[i - 1] in operators[:4]:
+                        continue
                     # Checking for double operators
-                    elif s[i + 1] in operators[:5]:
+                    elif s[i + 1] in operators[:4]:
                         return False
                 except:
                     return False
