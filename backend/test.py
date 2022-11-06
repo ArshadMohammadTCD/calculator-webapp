@@ -97,13 +97,13 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(calc_api("exp(-2)"), "0.135")
         self.assertEqual(calc_api("exp(-(-2))"), "7.389")
 
-    #def test_dec(self):
-    #    """
-    #    Test dec
-    #    """
-    #    self.assertEqual(calc_api("1.5+3.1"), "4.600")
-    #    self.assertEqual(calc_api("8.000+9.000"), "17.000")
-    #    self.assertEqual(calc_api("5.7655+1.47-5.6547*(8.11111-5.9)+4.269"), "-0.999")
+    def test_dec(self):
+        """
+        Test dec
+        """
+        self.assertEqual(calc_api("1.5+3.1"), "4.600")
+        self.assertEqual(calc_api("8.000+9.000"), "17.000")
+        self.assertEqual(calc_api("5.7655+1.47-5.6547*(8.11111-5.9)+4.269"), "-0.999")
 
 if __name__ == "__main__":
     unittest.main()
