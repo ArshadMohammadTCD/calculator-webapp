@@ -70,8 +70,10 @@ export default {
       }
     },
     calculate:function() {
-      const path = 'http://localhost:6969/calculator' // Not sure on the correct path
-      axios.get(path, { params: this.calculation_value})
+
+      const path = 'http://localhost:6969/users' // Not sure on the correct path
+      axios.post(path, { params: this.calculation_value})
+
         .then((res) => {
           this.calculation_value = res.data;
         }) 
